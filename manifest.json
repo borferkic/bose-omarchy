@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "io.github.borferkic.bose",
+  "name": "Bose QC Ultra",
+  "version": "0.1.0",
+  "author": "Boris SdK",
+  "license": "MIT",
+  "description": "Control Bose QuietComfort Ultra headphones from the bar: battery, modes, noise cancellation, spatial audio, EQ and settings.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Bose QC Ultra",
+    "description": "Battery in the bar; click for modes, noise cancellation, spatial audio, EQ and settings.",
+    "category": "Audio",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "deviceMatch": "bose",
+      "pollMinutes": 5
+    },
+    "schema": [
+      {
+        "key": "deviceMatch",
+        "type": "string",
+        "label": "Device name match",
+        "description": "Case-insensitive substring used to recognise your headphones among connected Bluetooth devices.",
+        "defaultValue": "bose"
+      },
+      {
+        "key": "pollMinutes",
+        "type": "integer",
+        "label": "Battery refresh (minutes)",
+        "description": "How often the battery is read while the panel is closed. Each read briefly takes the headphones' single BMAP link.",
+        "min": 1,
+        "max": 30,
+        "step": 1,
+        "defaultValue": 5
+      }
+    ]
+  }
+}
