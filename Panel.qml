@@ -94,7 +94,7 @@ Panel {
     proc.args = args
     proc.gotOutput = false
     working = true
-    proc.command = ["python3", "-I", root.pluginDir + "/bin/bosejson.py"].concat(args)
+    proc.command = ["python3", "-B", "-I", root.pluginDir + "/bin/bosejson.py"].concat(args)
     proc.running = true
   }
 
