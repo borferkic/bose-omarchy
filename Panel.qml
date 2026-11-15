@@ -71,7 +71,7 @@ Panel {
     "Reading…": "Leyendo…", "Firmware": "Firmware", "Name": "Nombre", "Max ANC": "Máx. ANC", "Aware": "Ambiente",
     "Headphones are busy: close the Bose app or wait a few seconds": "Auriculares ocupados: cierra la app de Bose o espera unos segundos",
     "Headphones not reachable": "Auriculares no accesibles",
-    "Long press": "Pulsación larga", "Low": "Bajo", "Medium": "Medio", "High": "Alto"
+    "Long press": "Pulsación larga", "Custom": "Personalizado", "Low": "Bajo", "Medium": "Medio", "High": "Alto"
   })
   function tr(s) { return es && esText[s] !== undefined ? esText[s] : s }
 
@@ -133,6 +133,8 @@ Panel {
     if (!rep) return ""
     var ps = rep.profiles || []
     for (var i = 0; i < ps.length; i++) if (ps[i].idx === rep.modeIdx) return ps[i].name
+    // 255 = no saved mode is active (levels were adjusted by hand)
+    if (rep.modeIdx === 255) return tr("Custom")
     return rep.mode
   }
   function setCnc(v) {
@@ -271,15 +273,12 @@ Panel {
           width: parent.width
           implicitHeight: heroText.implicitHeight
 
-          Text {
+          BoseMark {
             id: heroIcon
-            textFormat: Text.PlainText
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            text: root.icon
+            iconWidth: Style.space(52)
             color: root.foreground
-            font.family: root.fontFamily
-            font.pixelSize: Style.font.display
           }
           Column {
             id: heroText
