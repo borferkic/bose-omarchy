@@ -86,7 +86,12 @@ else:
                 info_text = info.stdout
 
                 # Must be an audio device with the BMAP UUID
+                # BlueZ omits the Icon line for some LE pairings and only reports
+                # Appearance; 0x0940-0x097F is the Wearable Audio Device category.
                 is_audio = ("audio-headset" in info_text or "audio-headphones" in info_text)
+                if not is_audio:
+                    app = re.search(r"Appearance:\s*0x([0-9A-Fa-f]{4})", info_text)
+                    is_audio = bool(app) and 0x0940 <= int(app.group(1), 16) <= 0x097F
                 has_bmap = BMAP_UUID in info_text
                 if not (is_audio and has_bmap):
                     continue
