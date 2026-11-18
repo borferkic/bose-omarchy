@@ -298,7 +298,7 @@ def parse_mode_config_48(payload):
     prompt_b1, prompt_b2 = payload[1], payload[2]
     prompt_name = PROMPTS.get((prompt_b1, prompt_b2), "(%d,%d)" % (prompt_b1, prompt_b2))
 
-    if len(payload) >= 48:
+    if len(payload) >= 47:
         editable = bool(payload[3])
         configured = bool(payload[4])
         flags = "%02x %02x %02x" % (payload[3], payload[4], payload[5])
@@ -308,7 +308,7 @@ def parse_mode_config_48(payload):
             prompt_bytes=(prompt_b1, prompt_b2), name=name,
             cnc_level=payload[42], auto_cnc=bool(payload[43]),
             spatial=payload[44], wind_block=bool(payload[45]),
-            anc_toggle=bool(payload[47]),
+            anc_toggle=bool(payload[47]) if len(payload) > 47 else False,
             editable=editable, configured=configured, flags=flags, raw=payload,
         )
     elif len(payload) >= 40:
